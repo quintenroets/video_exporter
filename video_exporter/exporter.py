@@ -27,7 +27,6 @@ class Exporter:
             return video.sort_order
 
         videos = [Video.from_path(path) for path in self.get_video_paths()]
-        pprint(videos)
         videos = sorted(videos, key=get_sort_order)
         return videos
 
