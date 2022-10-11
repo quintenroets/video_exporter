@@ -80,12 +80,11 @@ class Video(VideoInfo):
     def html_path(self):
         return (self.path.parent / videos_keyword / self.path.stem).with_suffix(".html")
 
+    def should_export(self, merge_folders):
+        return view_keyword not in self.path.stem or not merge_folders
+
     def export_html(self, merge_folders: bool = False):
-        if (
-            not self.html_path.exists()
-            and view_keyword not in self.path.stem
-            or merge_folders
-        ):
+        if not self.html_path.exists() and self.should_export(merge_folders):
             self.start_export_html(merge_folders=merge_folders)
 
     def get_sources(self, merge_folders: bool):

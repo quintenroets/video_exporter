@@ -32,8 +32,9 @@ class Exporter:
 
     def get_video_tags(self):
         for video in self.get_sorted_videos():
-            video.export_html(merge_folders=self.merge_folders)
-            yield video.tag
+            if video.should_export(self.merge_folders):
+                video.export_html(merge_folders=self.merge_folders)
+                yield video.tag
 
     def export(self):
         folder = Path.templates.as_uri()
