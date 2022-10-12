@@ -19,7 +19,7 @@ setup(
     name=NAME,
     version="1.0",
     packages=find_packages(),
-    package_data={"video_exporter": ["assets/**"]},
+    include_package_data=True,
     install_requires=read("requirements.txt"),
     entry_points={"console_scripts": ["export_videos = video_exporter.main:main"]},
 )
