@@ -57,6 +57,28 @@ function setup(video_el){
             document.getElementsByClassName("videocontent")[0].className = "videocontentsmall";
         }
     });
+    
+    player.on('seeking', function(t) {
+        if (player.scrubbing() && multiple){
+            for(var i = 0, max = videos.length; i < max; i++) {
+                let other_player = players[i];
+                if (other_player != player){
+                    other_player.currentTime(player.currentTime());
+                }
+            }
+        }
+    });
+    
+    player.on('pause', function(t) {
+        if (multiple){
+            for(var i = 0, max = videos.length; i < max; i++) {
+                let other_player = players[i];
+                if (other_player != player){
+                    other_player.pause();
+                }
+            }
+        }
+    });
         
     player.on('play', function() {
         active = true;
@@ -64,21 +86,16 @@ function setup(video_el){
             if(!player.isFullscreen()){
                 player.requestFullscreen();
             }
+        } else {
+            for(var i = 0, max = videos.length; i < max; i++) {
+                let other_player = players[i];
+                if (other_player != player){
+                    other_player.play();
+                }
+            }
         }
         window.localStorage.setItem(id_done, false);
     });
-
-    /*window.onunload = function () {
-        var checkpoint = player.currentTime();
-        if (checkpoint > player.duration() - 10){
-            checkpoint = checkpoint;
-            window.localStorage.setItem(id_done, true);
-        } else if (active){
-            checkpoint -= 10;
-            window.localStorage.removeItem(id_done);
-        }
-            window.localStorage.setItem(id, checkpoint);
-        }*/
 
     player.on('ended', function() {
         window.localStorage.setItem(id_done, true);
@@ -89,12 +106,14 @@ function setup(video_el){
     return player;
 }
 
+var players = [];
 videos = document.getElementsByTagName("video");
 for(var i = 0, max = videos.length; i < max; i++) 
 {
     let player = setup(videos[i]);
+    players.push(player);
     if (i>0){
-        player.muted(true);
+        //player.muted(true);
         multiple = true;
     }
 } 
