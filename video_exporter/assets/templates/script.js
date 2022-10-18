@@ -70,7 +70,7 @@ function setup(video_el){
     });
     
     player.on('pause', function(t) {
-        if (multiple){
+        if (multiple && !document.hidden){
             for(var i = 0, max = videos.length; i < max; i++) {
                 let other_player = players[i];
                 if (other_player != player){
