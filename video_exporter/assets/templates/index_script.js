@@ -1,3 +1,7 @@
+DONE_COLOR = "rgb(27, 89, 168)";
+TODO_COLOR = "rgb(148, 156, 165)";
+
+
 onload = function() {
     let opened = false;
     var links = document.getElementsByTagName('a');
@@ -44,6 +48,7 @@ onload = function() {
         });
     }
     setColors();
+    scrollToTodo();
     
 }
 
@@ -55,11 +60,21 @@ setColors = function() {
         var color;
         
         if (done !== "true"){
-            color = "#949CA5";
+            color = TODO_COLOR;
         } else if (done == "true"){
-            color = "#1b59A8";
+            color = DONE_COLOR;
         }
         links[i].style.color = color;
+    }
+}
+
+scrollToTodo = function() {
+    var links = document.getElementsByTagName('a');
+    for(var i = 0; i< links.length; i++){
+        if (links[i].style.color === TODO_COLOR){
+            links[i].scrollIntoView();
+            break;
+        } 
     }
 }
 
