@@ -1,4 +1,3 @@
-import mimetypes
 from dataclasses import asdict, dataclass
 from datetime import datetime
 
@@ -8,11 +7,6 @@ from .path import Path
 
 view_keyword = "__VIEW__"
 videos_keyword = "Videos"
-
-
-def is_video(path: Path):
-    filetype = mimetypes.guess_type(path)[0]
-    return filetype and filetype.startswith("video")
 
 
 @dataclass
@@ -89,7 +83,9 @@ class Video(VideoInfo):
 
     def get_sources(self, merge_folders: bool):
         if merge_folders:
-            sources = [path for path in self.path.parent.iterdir() if is_video(path)]
+            sources = [
+                path for path in self.path.parent.iterdir() if path.filetype == "video"
+            ]
         else:
             sources = [self.path]
             second_view_path = self.path.with_stem(self.path.stem + view_keyword)
