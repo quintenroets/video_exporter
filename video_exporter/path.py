@@ -7,3 +7,6 @@ class Path(plib.Path):
     templates = root / "assets" / "templates"
     template1 = templates / "video.html"
     template2 = templates / "video2.html"
+
+    def is_video(self):
+        return self.filetype == "video"

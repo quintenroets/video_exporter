@@ -83,9 +83,7 @@ class Video(VideoInfo):
 
     def get_sources(self, merge_folders: bool):
         if merge_folders:
-            sources = [
-                path for path in self.path.parent.iterdir() if path.filetype == "video"
-            ]
+            sources = [path for path in self.path.parent.iterdir() if path.is_video()]
         else:
             sources = [self.path]
             second_view_path = self.path.with_stem(self.path.stem + view_keyword)

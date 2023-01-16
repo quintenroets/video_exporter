@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Iterator, List
 
 from .path import Path
-from .video import Video, is_video, videos_keyword
+from .video import Video, videos_keyword
 
 
 @dataclass
@@ -20,7 +20,7 @@ class Exporter:
 
     def get_video_paths(self) -> Iterator[Path]:
         for folder in self.folders:
-            yield from folder.find(is_video, recurse_on_match=True)
+            yield from folder.find(lambda path: path.is_video(), recurse_on_match=True)
 
     def get_sorted_videos(self) -> List[Video]:
         def get_sort_order(video: Video):
