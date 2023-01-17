@@ -1,12 +1,26 @@
 import plib
 
-root = plib.Path(__file__).parent
-
 
 class Path(plib.Path):
-    templates = root / "assets" / "templates"
-    template1 = templates / "video.html"
-    template2 = templates / "video2.html"
+    @classmethod
+    @property
+    def root(cls):
+        return cls(__file__).parent
+
+    @classmethod
+    @property
+    def templates(cls):
+        return cls.root / "assets" / "templates"
+
+    @classmethod
+    @property
+    def template1(cls):
+        return cls.templates / "video.html"
+
+    @classmethod
+    @property
+    def template2(cls):
+        return cls.templates / "video2.html"
 
     def is_video(self):
         return self.filetype == "video"

@@ -20,7 +20,9 @@ class Exporter:
 
     def get_video_paths(self) -> Iterator[Path]:
         for folder in self.folders:
-            yield from folder.find(lambda path: path.is_video(), recurse_on_match=True)
+            yield from Path(folder).find(
+                lambda path: path.is_video(), recurse_on_match=True
+            )
 
     def get_sorted_videos(self) -> List[Video]:
         def get_sort_order(video: Video):
