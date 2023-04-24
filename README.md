@@ -16,6 +16,7 @@ Optional options:
 
 ```shell
 pip install git+https://github.com/quintenroets/video_exporter
+apt install mediainfo
 ```
 
 ## Usage

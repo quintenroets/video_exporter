@@ -1,0 +1,33 @@
+[project]
+name = "video_exporter"
+version = "1.0.2"
+description = ""
+authors = [{name = "Quinten Roets", email = "qdr2104@columbia.edu"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "superpathlib",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/quintenroets/video_exporter"
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit"
+]
+test = [
+    "hypothesis",
+    "pytest"
+]
+
+[project.scripts]
+export_videos = "video_exporter.main:main"
+
+[tool.setuptools.package-data]
+video_exporter = ["assets/**"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

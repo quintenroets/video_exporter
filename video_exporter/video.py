@@ -33,7 +33,10 @@ class VideoInfo(Item):
 
 
 def get_duration(path: Path):
-    milliseconds = cli.get(f'mediainfo --Inform="Video;%Duration%"', path) or 0
+    program = "mediainfo"
+    if not cli.is_success(f"which {program}"):
+        cli.install(program)
+    milliseconds = cli.get(f'{program} --Inform="Video;%Duration%"', path) or 0
     # Some durations are in float format
     seconds = int(float(milliseconds)) // 1000
     return seconds
